@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+
+    <link rel="stylesheet" href="styles.css">
+
+    <title>Vue</title>
+</head>
+<body>
+    <div id="app">
+        <form>
+            <label>
+                Nombre de usuario
+                <input type="text" v-model="username">
+            </label>
+            <label>
+                Nombre
+                <input type="text" v-model="name">
+            </label>
+            <button @click="addUser">Save</button>
+        </form>
+        <div>
+            <table>
+                <tr>
+                    <th>#</th>
+                    <th>Username</th>
+                    <th>Name</th>
+                </tr>
+                <tr v-for="(user, i) in users">
+                    <td>{{ i + 1}}</td>
+                    <td>{{ user.username }}</td>
+                    <td>{{ user.name }}</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
