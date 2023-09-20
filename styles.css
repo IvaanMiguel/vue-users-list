@@ -22,15 +22,19 @@ button {
 }
 
 table {
-    width: 50%;
+    width: 100%;
+    max-width: 1300px;
     margin: 0 auto;
+
+    table-layout: fixed;
 }
 
-tr { display: flex; }
-
 th, td {
-    flex: 1;
-    text-align: center;
-
     padding: .2rem;
+    border: 1px solid black;
+
+    text-align: center;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
 }

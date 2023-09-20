@@ -4,8 +4,10 @@ createApp({
     setup() {
         // const username = ''
         // const name = ''
-        const email = ''
-        const password = ''
+        const email = 'Sincere@april.biz'
+        const password = '1234'
+        const isLogged = ref(localStorage.getItem('isLogged') ?? false)
+        const usersList = ref([])
         // const users = ref([])
 
         return {
@@ -13,8 +15,18 @@ createApp({
             // name,
             email,
             password,
+            isLogged,
+            usersList
             // users
         }
+    },
+
+    mounted: function() {
+        if (!this.isLogged) return
+
+        fetch("users.json")
+            .then(response => response.json())
+            .then(users => this.usersList = users)
     },
 
     methods: {
@@ -26,11 +38,15 @@ createApp({
                 .then(users => {
                     const userFound = users.find(user => user.email === this.email && user.password === this.password)
 
-                    alert(userFound ? 'Bienvenido.' : 'El email o la contraseña no coinciden.')
+                    this.isLogged = userFound !== undefined
 
-                    if (!userFound) return
+                    alert(this.isLogged ? 'Bienvenido.' : 'El email o la contraseña no coinciden.')
 
-                    console.log('Guardando datos.')
+                    if (!this.isLogged) return
+
+                    localStorage.setItem('userData', JSON.stringify(userFound))
+                    localStorage.setItem('isLogged', this.isLogged)
+                    this.usersList = users
                 })
 
             // if (!this.username || !this.name) return

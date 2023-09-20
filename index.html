@@ -12,7 +12,7 @@
 </head>
 <body>
     <div id="app">
-        <form>
+        <form v-if='!isLogged'>
             <label>
                 Email
                 <input type="text" v-model="email">
@@ -23,6 +23,22 @@
             </label>
             <button @click="login">Login</button>
         </form>
+        <table v-if='isLogged'>
+            <tr>
+                <th>Username</th>
+                <th>Email</th>
+                <th>Name</th>
+                <th>Address</th>
+                <th>Contact</th>
+            </tr>
+            <tr v-for='user in usersList'>
+                <td>{{ user.username }}</td>
+                <td>{{ user.email }}</td>
+                <td>{{ user.name }}</td>
+                <td>{{ user.address.city }}, {{ user.address.street }}</td>
+                <td>{{ user.phone }}</td>
+            </tr>
+        </table>
         <!-- <form>
             <label>
                 Nombre de usuario
