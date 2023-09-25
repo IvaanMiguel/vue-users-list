@@ -1,3 +1,11 @@
+* {
+    box-sizing: border-box;
+}
+
+h3 {
+    text-align: center;
+}
+
 form {
     display: flex;
     flex-direction: column;
@@ -14,11 +22,15 @@ label {
     gap: .2rem;
 }
 
-input { padding: .5rem 1rem; }
+input {
+    padding: .5rem 1rem;
+}
 
 button {
     width: fit-content;
     padding: .5rem 1.5rem;
+
+    cursor: pointer;
 }
 
 table {
@@ -27,6 +39,14 @@ table {
     margin: 0 auto;
 
     table-layout: fixed;
+}
+
+th:first-of-type {
+    width: 5ch;
+}
+
+tr:not(:first-of-type):hover {
+    background-color: lightgray;
 }
 
 th, td {

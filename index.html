@@ -15,7 +15,7 @@
         <form v-if='!isLogged'>
             <label>
                 Email
-                <input type="text" v-model="email">
+                <input type="text" v-model="loginEmail">
             </label>
             <label>
                 Password
@@ -23,47 +23,72 @@
             </label>
             <button @click="login">Login</button>
         </form>
-        <table v-if='isLogged'>
-            <tr>
-                <th>Username</th>
-                <th>Email</th>
-                <th>Name</th>
-                <th>Address</th>
-                <th>Contact</th>
-            </tr>
-            <tr v-for='user in usersList'>
-                <td>{{ user.username }}</td>
-                <td>{{ user.email }}</td>
-                <td>{{ user.name }}</td>
-                <td>{{ user.address.city }}, {{ user.address.street }}</td>
-                <td>{{ user.phone }}</td>
-            </tr>
-        </table>
-        <!-- <form>
-            <label>
-                Nombre de usuario
-                <input type="text" v-model="username">
-            </label>
-            <label>
-                Nombre
-                <input type="text" v-model="name">
-            </label>
-            <button @click="addUser">Save</button>
-        </form>
-        <div>
+        <div v-if='isLogged && !isInUserForm'>
+            <button type='button' @click='createUser'>Add user</button>
             <table>
                 <tr>
-                    <th>#</th>
+                    <th></th>
                     <th>Username</th>
+                    <th>Email</th>
                     <th>Name</th>
+                    <th>Address</th>
+                    <th>Contact</th>
+                    <th></th>
                 </tr>
-                <tr v-for="(user, i) in users">
-                    <td>{{ i + 1}}</td>
+                <tr v-for='(user, i) in usersList'>
+                    <input type='hidden' :value='user.id'>
+                    <td>{{ user.id }}</td>
                     <td>{{ user.username }}</td>
+                    <td>{{ user.email }}</td>
                     <td>{{ user.name }}</td>
+                    <td v-if='user.address'>{{ user.address.city }}, {{ user.address.street }}</td>
+                    <td v-else>{{ user.city }}, {{ user.street }}</td>
+                    <td>{{ user.phone }}</td>
+                    <td>
+                        <div>
+                            <button @click='editUser'>Edit</button>
+                            <button @click='destroyUser'>Delete</button>
+                        </div>
+                    </td>
                 </tr>
             </table>
-        </div> -->
+        </div>
+        <div v-if='isInUserForm'>
+            <h3>Adding a new user</h3>
+            <form>
+                <input type='hidden' v-model='userForm.id'>
+                <label>
+                    Username
+                    <input type='text' v-model='userForm.username'>
+                </label>
+                <label>
+                    Email
+                    <input type='text' v-model='userForm.email'>
+                </label>
+                <label>
+                    Name
+                    <input type='text' v-model='userForm.name'>
+                </label>
+                <label>
+                    City
+                    <input type='text' v-model='userForm.city'>
+                </label>
+                <label>
+                    Street
+                    <input type='text' v-model='userForm.street'>
+                </label>
+                <label>
+                    Contact
+                    <input type='text' v-model='userForm.phone'>
+                </label>
+                <div>
+                    <button type='button' @click='() => userForm.id ? updateUser() : storeUser()'>
+                        {{ userForm.id ? 'Update user' : 'Save user' }}
+                    </button>
+                    <button type='button' @click='cancelUserForm'>Cancel</button>
+                </div>
+            </form>
+        </div>
     </div>
 
     <script src="app.js"></script>
